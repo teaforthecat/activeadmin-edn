@@ -94,7 +94,7 @@ inject_into_file(
 )
 
 # Add our local Active Admin to the load path
-lib_path = File.expand_path('../../../lib/activeadmin-xls', __FILE__)
+lib_path = File.expand_path('../../../lib/activeadmin-edn', __FILE__)
 inject_into_file 'config/environment.rb',
                  "\nrequire '#{lib_path}'\n",
                  after: "require File.expand_path('../application', __FILE__)"
@@ -116,7 +116,7 @@ run 'rm -r test'
 run 'rm -r spec'
 
 inject_into_file 'config/initializers/active_admin.rb',
-                 "  config.download_links = %i[csv xml json xls]\n",
+                 "  config.download_links = %i[csv xml json edn]\n",
                  after: "  # == Download Links\n"
 
 # Setup a root path for devise

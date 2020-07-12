@@ -2,8 +2,8 @@ require 'stringio'
 require 'spreadsheet'
 
 module ActiveAdmin
-  module Xls
-    # Builder for xls data.
+  module Edn
+    # Builder for edn data.
     class Builder
       include MethodOrProcHelper
 
@@ -19,7 +19,7 @@ module ActiveAdmin
       #   Builder. That means you can call any method on the builder from within
       #   that block.
       # @example
-      #   ActiveAdmin::Xls::Builder.new(Post, i18n: [:xls]) do
+      #   ActiveAdmin::Edn::Builder.new(Post, i18n: [:edn]) do
       #     delete_columns :id, :created_at, :updated_at
       #     column(:author_name) { |post| post.author.name }
       #     after_filter do |sheet|
@@ -56,7 +56,7 @@ module ActiveAdmin
       # @example In Builder.new
       #   options = {
       #     header_format: { weight: :bold },
-      #     i18n_scope: %i[xls post]
+      #     i18n_scope: %i[edn post]
       #   }
       #   Builder.new(Post, options) do
       #     skip_header
@@ -64,13 +64,13 @@ module ActiveAdmin
       #
       # @example With DSL
       #   ActiveAdmin.register Post do
-      #     xls(header_format: { weight: :bold }, i18n_scope: %i[xls post]) do
+      #     edn(header_format: { weight: :bold }, i18n_scope: %i[edn post]) do
       #       skip_header
       #     end
       #   end
       #
       # @example Simple DSL without block
-      #   xls header_format: { weight: :bold }
+      #   edn header_format: { weight: :bold }
       #
       # @see https://github.com/zdavatz/spreadsheet/blob/master/lib/spreadsheet/format.rb
       def header_format=(format_hash)
@@ -84,7 +84,7 @@ module ActiveAdmin
       # @example In Builder.new
       #   options = {
       #     header_format: { weight: :bold },
-      #     i18n_scope: %i[xls post]
+      #     i18n_scope: %i[edn post]
       #   }
       #   Builder.new(Post, options) do
       #     skip_header
@@ -92,7 +92,7 @@ module ActiveAdmin
       #
       # @example With DSL
       #   ActiveAdmin.register Post do
-      #     xls(header_format: { weight: :bold }, i18n_scope: %i[xls post]) do
+      #     edn(header_format: { weight: :bold }, i18n_scope: %i[edn post]) do
       #       skip_header
       #     end
       #   end
@@ -115,7 +115,7 @@ module ActiveAdmin
       #   collection has been serialized
       #
       # @example With DSL
-      #   xls do
+      #   edn do
       #     after_filter do |sheet|
       #       row_number = sheet.dimensions[1]
       #       sheet.update_row(row_number)
@@ -140,7 +140,7 @@ module ActiveAdmin
       #   collection has been serialized
       #
       # @example with DSL
-      #   xls do
+      #   edn do
       #     before_filter do |sheet|
       #       users = collection.map(&:author)
       #       users.each do |user|
@@ -177,7 +177,7 @@ module ActiveAdmin
       # ignore_column.
       #
       # @example Using alias whitelist
-      #   Builder.new(Post, header_style: {}, i18n_scope: %i[xls post]) do
+      #   Builder.new(Post, header_style: {}, i18n_scope: %i[edn post]) do
       #     whitelist
       #     column :title
       #   end
@@ -198,13 +198,13 @@ module ActiveAdmin
       #                     when generating row data for this column.
       #
       # @example With block
-      #   xls(i18n_scope: [:rspec], header_style: { size: 20 }) do
+      #   edn(i18n_scope: [:rspec], header_style: { size: 20 }) do
       #     delete_columns :id, :created_at
       #     column(:author) { |post| post.author.first_name }
       #   end
       #
       # @example With default value
-      #   Builder.new(Post, header_style: {}, i18n_scope: %i[xls post]) do
+      #   Builder.new(Post, header_style: {}, i18n_scope: %i[edn post]) do
       #     whitelist
       #     column :title
       #   end
@@ -225,7 +225,7 @@ module ActiveAdmin
       # @example In Builder.new
       #   options = {
       #     header_style: { size: 10, color: 'red' },
-      #     i18n_scope: %i[xls post]
+      #     i18n_scope: %i[edn post]
       #   }
       #   Builder.new(Post, options) do
       #     delete_columns :id, :created_at, :updated_at
@@ -248,7 +248,7 @@ module ActiveAdmin
       # Each column_name should be a symbol
       #
       # @example
-      #   config.xls_builder.only_columns :title, :author
+      #   config.edn_builder.only_columns :title, :author
       def only_columns(*column_names)
         clear_columns
         column_names.each do |column_name|
@@ -273,7 +273,7 @@ module ActiveAdmin
         to_stream book
       end
 
-      # Xls column information
+      # Edn column information
       class Column
         # @param name [String, Symbol] Name of the column. If the name of the
         #   column is an existing attribute of the resource class, the value

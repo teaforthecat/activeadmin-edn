@@ -1,5 +1,5 @@
 #!/usr/bin/env rake
-require File.expand_path('../lib/active_admin/xls/version', __FILE__)
+require File.expand_path('../lib/active_admin/edn/version', __FILE__)
 require 'rspec/core/rake_task'
 
 desc 'Creates a test rails app for the specs to run against'
@@ -34,10 +34,10 @@ task test: :spec
 
 desc 'build the gem'
 task :build do
-  system 'gem build activeadmin-xls.gemspec'
+  system 'gem build activeadmin-edn.gemspec'
 end
 
 desc 'build and release the gem'
 task release: :build do
-  system "gem push activeadmin-xls-#{ActiveAdmin::Xls::VERSION}.gem"
+  system "gem push activeadmin-edn-#{ActiveAdmin::Edn::VERSION}.gem"
 end

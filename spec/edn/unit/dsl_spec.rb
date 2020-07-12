@@ -2,12 +2,12 @@ require 'spec_helper'
 
 module ActiveAdmin
   # tests for dsl
-  module Xls
+  module Edn
     describe ::ActiveAdmin::ResourceDSL do
       context 'in a registration block' do
         let(:builder) do
           config = ActiveAdmin.register(Post) do
-            xls(i18n_scope: [:rspec], header_style: { size: 20 }) do
+            edn(i18n_scope: [:rspec], header_style: { size: 20 }) do
               delete_columns :id, :created_at
               column(:author) { |post| post.author.first_name }
               before_filter do |sheet|
@@ -21,7 +21,7 @@ module ActiveAdmin
               skip_header
             end
           end
-          config.xls_builder
+          config.edn_builder
         end
 
         it 'uses our customized i18n scope' do

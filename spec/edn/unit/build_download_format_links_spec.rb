@@ -46,7 +46,7 @@ describe ActiveAdmin::Views::PaginatedCollection do
     allow(collection).to receive(:reorder) { collection }
   end
 
-  it 'renders the xls download link' do
-    expect(pagination.children.last.content).to match(/XLS/)
+  it 'renders the edn download link' do
+    expect(pagination.children.last.content).to match(/EDN/)
   end
 end

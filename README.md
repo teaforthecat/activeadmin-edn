@@ -1,6 +1,6 @@
-# Active Admin Xls
+# Active Admin Edn
 
-Excel Spreadsheet Export for [Active Admin]
+EDN Export for [Active Admin]
 
 [![Version][rubygems_badge]][rubygems]
 [![Travis CI][travis_badge]][travis]
@@ -10,27 +10,25 @@ Excel Spreadsheet Export for [Active Admin]
 
 ## Synopsis
 
-This gem provides xls downloads for Active Admin resources.
-
-This gem borrows heavily from [activeadmin-axlsx] and [to_xls].
+This gem provides edn downloads for Active Admin resources.
 
 ## Usage
 
-Add the following to your Gemfile. All resource index views will now include a link for download directly to xls.
+Add the following to your Gemfile. All resource index views will now include a link for download directly to edn.
 
 ```ruby
-gem 'activeadmin-xls', '~>2.0.0'
+gem 'activeadmin-edn', '~>0.0.0'
 ```
 
-For Active Admin 1.0 and above, you will also have to update config/initializers/active_admin.rb.  Update the download\_links setting to include xls:
+For Active Admin 1.0 and above, you will also have to update config/initializers/active_admin.rb.  Update the download\_links setting to include edn:
 
 ```ruby
-config.download_links = %i[csv xml json xls]
+config.download_links = %i[csv xml json edn]
 ```
 
 ## Dependencies
 
-This gem depends on [spreadsheet] to generate xls files.
+This gem depends on [edn] to generate edn files.
 
 ## Examples
 
@@ -41,90 +39,8 @@ Here are a few quick examples of things you can easily tweak.
 ```ruby
 # app/admin/posts.rb
 ActiveAdmin.register Post do
-  config.xls_builder.i18n_scope = [:active_record, :models, :posts]
+  config.edn_builder.i18n_scope = [:active_record, :models, :posts]
 end
-```
-
-### Use blocks for adding computed fields
-
-```ruby
-# app/admin/posts.rb
-ActiveAdmin.register Post do
-  config.xls_builder.column('author_name') do |resource|
-    resource.author.name
-  end
-end
-```
-
-### Change the column header format
-
-```ruby
-# app/admin/posts.rb
-ActiveAdmin.register Post do
-  config.xls_builder.header_format = { weight: :bold,
-                                       color: :blue }
-end
-```
-
-### Remove columns
-
-```ruby
-# app/admin/posts.rb
-ActiveAdmin.register Post do
-  config.xls_builder.delete_columns :id, :created_at, :updated_at
-end
-```
-
-### Restrict columns to a list
-
-```ruby
-# app/admin/posts.rb
-ActiveAdmin.register Post do
-  config.xls_builder.only_columns :title, :author
-end
-```
-
-## Using the DSL
-
-Everything that you do with the config's default builder can be done via
-the resource DSL.
-
-Below is an example of the DSL
-
-```ruby
-ActiveAdmin.register Post do
-
-  # i18n_scope and header style are set via options
-  xls(i18n_scope: [:active_admin, :xls, :post],
-      header_format: { weight: :bold, color: :blue }) do
-
-    # Specify that you want to white list column output.
-    # whitelist
-
-    # Do not serialize the header, only output data.
-    # skip_header
-
-    # restrict columns to a list without customization
-    # only_columns :title, :author
-
-    # deleting columns from the report
-    delete_columns :id, :created_at, :updated_at
-
-    # adding a column to the report with customization
-    column(:author) { |post| "#{post.author.first_name} #{post.author.last_name}" }
-
-    # inserting additional data with after_filter
-    after_filter do |sheet|
-      # todo
-    end
-
-    # inserting data with before_filter
-    before_filter do |sheet|
-      # todo
-    end
-  end
-end
-```
 
 ## Testing
 

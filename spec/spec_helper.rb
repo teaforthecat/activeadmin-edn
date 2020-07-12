@@ -27,11 +27,11 @@ unless File.exist?(ENV['RAILS_ROOT'])
   exit
 end
 
-# load up activeadmin and activeadmin-xls
+# load up activeadmin and activeadmin-edn
 require 'active_record'
 require 'active_admin'
 require 'devise'
-require 'activeadmin-xls'
+require 'activeadmin-edn'
 ActiveAdmin.application.load_paths = [ENV['RAILS_ROOT'] + '/app/admin']
 
 # start up rails

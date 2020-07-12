@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'spreadsheet', '~> 1.1', '>= 1.1.4'
+gem 'edn', '~> 1.1'
 
 group :development, :test do
   gem 'rails-i18n' # Gives us default i18n for many languages

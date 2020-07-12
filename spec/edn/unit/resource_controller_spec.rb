@@ -1,17 +1,17 @@
 require 'spec_helper'
 describe Admin::CategoriesController, type: :controller do
-  let(:mime) { Mime::Type.lookup_by_extension(:xls) }
+  let(:mime) { Mime::Type.lookup_by_extension(:edn) }
 
   let(:filename) do
-    "categories-#{Time.now.strftime('%Y-%m-%d')}.xls"
+    "categories-#{Time.now.strftime('%Y-%m-%d')}.edn"
   end
 
-  it 'generates an xls filename' do
-    expect(controller.xls_filename).to eq(filename)
+  it 'generates an edn filename' do
+    expect(controller.edn_filename).to eq(filename)
   end
 
-  context 'when making requests with the xls mime type' do
-    it 'returns xls attachment when requested' do
+  context 'when making requests with the edn mime type' do
+    it 'returns edn attachment when requested' do
       request.accept = mime
       get :index
       disposition = "attachment; filename=\"#{filename}\""

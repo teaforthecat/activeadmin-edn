@@ -2,7 +2,7 @@ require 'spec_helper'
 include ActiveAdmin
 
 module ActiveAdmin
-  module Xls
+  module Edn
     describe Resource do
       let(:resource) { ActiveAdmin.register(Post) }
 
@@ -13,12 +13,12 @@ module ActiveAdmin
       end
 
       context 'when registered' do
-        it 'each resource has an xls_builder' do
-          expect(resource.xls_builder).to be_a(Builder)
+        it 'each resource has an edn_builder' do
+          expect(resource.edn_builder).to be_a(Builder)
         end
 
         it 'We can specify our own configured builder' do
-          expect { resource.xls_builder = custom_builder }.not_to raise_error
+          expect { resource.edn_builder = custom_builder }.not_to raise_error
         end
       end
     end

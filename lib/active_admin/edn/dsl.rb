@@ -1,6 +1,6 @@
 module ActiveAdmin
-  module Xls
-    # Extends activeadmin dsl to include xls
+  module Edn
+    # Extends activeadmin dsl to include edn
     module DSL
       delegate(:after_filter,
                :before_filter,
@@ -12,10 +12,10 @@ module ActiveAdmin
                :only_columns,
                :skip_header,
                :whitelist,
-               to: :xls_builder,
+               to: :edn_builder,
                prefix: :config)
 
-      # Creates a default XLS Builder to respond to xls requests for this
+      # Creates a default EDN Builder to respond to edn requests for this
       # resource. Options are passed to the Builder initialize method.
       #
       # @param [Hash] options the options for the builder
@@ -30,7 +30,7 @@ module ActiveAdmin
       # @return A new instance of Builder
       #
       # @example Using the DSL
-      #   xls(i18n_scope: [:active_admin, :xls, :post],
+      #   edn(i18n_scope: [:active_admin, :edn, :post],
       #       header_format: { weight: :bold, color: :blue }) do
       #     # Specify that you want to white list column output.
       #     # whitelist
@@ -62,8 +62,8 @@ module ActiveAdmin
       #
       # @see Builder
       # @see https://github.com/zdavatz/spreadsheet/blob/master/lib/spreadsheet/format.rb
-      def xls(options = {}, &block)
-        config.xls_builder = ActiveAdmin::Xls::Builder.new(
+      def edn(options = {}, &block)
+        config.edn_builder = ActiveAdmin::Edn::Builder.new(
           config.resource_class,
           options,
           &block

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module ActiveAdmin
   # tests for builder
-  module Xls
+  module Edn
     describe Builder do
       let(:builder) { Builder.new(Post) }
       let(:content_columns) { Post.content_columns }
@@ -76,7 +76,7 @@ module ActiveAdmin
         let!(:builder) do
           options = {
             header_format: { weight: :bold },
-            i18n_scope: %i[xls post]
+            i18n_scope: %i[edn post]
           }
           Builder.new(Post, options) do
             skip_header
@@ -100,7 +100,7 @@ module ActiveAdmin
         end
 
         let!(:builder) do
-          Builder.new(Post, header_style: {}, i18n_scope: %i[xls post]) do
+          Builder.new(Post, header_style: {}, i18n_scope: %i[edn post]) do
             skip_header
             whitelist
             column :title
@@ -123,7 +123,7 @@ module ActiveAdmin
         let!(:builder) do
           options = {
             header_style: { size: 10, color: 'red' },
-            i18n_scope: %i[xls post]
+            i18n_scope: %i[edn post]
           }
           Builder.new(Post, options) do
             delete_columns :id, :created_at, :updated_at
@@ -178,7 +178,7 @@ module ActiveAdmin
         end
 
         it 'uses the specified i18n_scope' do
-          expect(builder.i18n_scope).to eq(%i[xls post])
+          expect(builder.i18n_scope).to eq(%i[edn post])
         end
 
         it 'translates the header row based on our i18n scope' do
@@ -211,7 +211,7 @@ module ActiveAdmin
         end
 
         let!(:builder) do
-          Builder.new(Post, header_style: {}, i18n_scope: %i[xls post]) do
+          Builder.new(Post, header_style: {}, i18n_scope: %i[edn post]) do
             delete_columns :id, :created_at, :updated_at
             column(:author) do |resource|
               raise 'err' if resource.title == 'err'
