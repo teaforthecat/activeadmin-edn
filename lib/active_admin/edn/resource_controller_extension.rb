@@ -28,6 +28,17 @@ module ActiveAdmin
         end
       end
 
+      def show
+        super do |format|
+          format.edn do
+            send_data resource.to_edn,
+                      filename: resource.display_name.parameterize + ".edn",
+                      type: Mime::Type.lookup_by_extension(:edn)
+            yield(format) if block_given?
+          end
+        end
+      end
+
       def render_streaming(enumerator)
         # Delete this header so that Rack knows to stream the content.
         headers.delete("Content-Length")
