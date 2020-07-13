@@ -3,7 +3,8 @@ module ActiveAdmin
     # Extends the resource controller to respond to edn requests
     module ResourceControllerExtension
       def self.prepended(base)
-        base.send :respond_to, :edn, only: :index
+        # base.send :respond_to, :edn, only: :index
+        base.send :respond_to, :edn, only: [:index, :show]
       end
 
       # Patches index to respond to requests with edn mime type by
@@ -12,15 +13,34 @@ module ActiveAdmin
       def index
         super do |format|
           format.edn do
-            edn = active_admin_config.edn_builder.serialize(edn_collection,
-                                                            view_context)
-            send_data(edn,
-                      filename: edn_filename,
-                      type: Mime::Type.lookup_by_extension(:edn))
+            stream_enum = Enumerator.new do |lines|
+              lines << "[\n"
+              edn_collection.find_each(batch_size: 500).map do |obj|
+                lines << obj.to_edn
+                lines << ",\n"
+              end
+              lines << "]\n"
+            end
+            self.status = 200
+            render_streaming stream_enum
+            yield(format) if block_given?
           end
-
-          yield(format) if block_given?
         end
+      end
+
+      def render_streaming(enumerator)
+        # Delete this header so that Rack knows to stream the content.
+        headers.delete("Content-Length")
+        # Do not cache results from this action.
+        headers["Cache-Control"] = "no-cache"
+        # Let the browser know that this file is a CSV.
+        headers['Content-Type'] = Mime::Type.lookup_by_extension(:edn)
+        # Do not buffer the result when using proxy servers.
+        headers['X-Accel-Buffering'] = 'no'
+        # Set the filename
+        headers['Content-Disposition'] = "attachment; filename=\"#{edn_filename}\""
+        # Set the response body as the enumerator
+        self.response_body = enumerator
       end
 
       # Patches rescue_active_admin_access_denied to respond to edn

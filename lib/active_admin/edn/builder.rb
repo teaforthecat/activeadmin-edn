@@ -264,12 +264,12 @@ module ActiveAdmin
       def serialize(collection, view_context = nil)
         @collection = collection
         @view_context = view_context
-        book = Spreadsheet::Workbook.new
-        sheet = book.create_worksheet
+
         load_columns unless @columns_loaded
         apply_filter @before_filter, sheet
         export_collection collection, sheet
         apply_filter @after_filter, sheet
+
         to_stream book
       end
 
